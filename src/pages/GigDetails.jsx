@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import BidItem from '../components/BidItem';
 import { ArrowLeft, Clock, User, CheckCircle } from 'lucide-react';
+import { useSocket } from '../context/SocketContext';
 
 const GigDetails = () => {
     const { id } = useParams();
@@ -30,6 +31,8 @@ const GigDetails = () => {
         fetchGig();
     }, [id]);
 
+    const socket = useSocket();
+
     useEffect(() => {
         if (gig && userInfo && gig.ownerId._id === userInfo._id) {
             const fetchBids = async () => {
@@ -43,6 +46,21 @@ const GigDetails = () => {
             fetchBids();
         }
     }, [gig, userInfo, id]);
+
+    // Listen for real-time hire notifications to update UI instantly
+    useEffect(() => {
+        if (socket) {
+            socket.on('hire_notification', (data) => {
+                if (data.gigId === id || (gig && data.gigId === gig._id)) {
+                    setGig((prev) => ({ ...prev, status: 'assigned' }));
+                }
+            });
+
+            return () => {
+                socket.off('hire_notification');
+            };
+        }
+    }, [socket, id, gig]);
 
     const handleBidSubmit = async (e) => {
         e.preventDefault();
