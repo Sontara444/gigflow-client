@@ -19,7 +19,7 @@ const GigDetails = () => {
     useEffect(() => {
         const fetchGig = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/gigs/${id}`);
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/gigs/${id}`);
                 setGig(res.data);
                 setLoading(false);
             } catch (err) {
@@ -34,7 +34,7 @@ const GigDetails = () => {
         if (gig && userInfo && gig.ownerId._id === userInfo._id) {
             const fetchBids = async () => {
                 try {
-                    const res = await axios.get(`http://localhost:5000/api/bids/${id}`, { withCredentials: true });
+                    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/bids/${id}`, { withCredentials: true });
                     setBids(res.data);
                 } catch (err) {
                     console.error(err);
@@ -47,7 +47,7 @@ const GigDetails = () => {
     const handleBidSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/api/bids',
+            await axios.post(`${import.meta.env.VITE_API_URL}/api/bids`,
                 { gigId: id, message, price },
                 { withCredentials: true }
             );
@@ -62,7 +62,7 @@ const GigDetails = () => {
     const handleHire = async (bidId) => {
         if (window.confirm('Are you sure you want to hire this freelancer?')) {
             try {
-                await axios.patch(`http://localhost:5000/api/bids/${bidId}/hire`, {}, { withCredentials: true });
+                await axios.patch(`${import.meta.env.VITE_API_URL}/api/bids/${bidId}/hire`, {}, { withCredentials: true });
                 window.location.reload();
             } catch (err) {
                 alert(err.response?.data?.message || err.message);

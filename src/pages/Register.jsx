@@ -30,7 +30,7 @@ const Register = () => {
         }
         setLoading(true);
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/register',
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`,
                 { name, email, password },
                 { withCredentials: true }
             );

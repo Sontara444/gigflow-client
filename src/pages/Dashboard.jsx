@@ -11,7 +11,7 @@ const Dashboard = () => {
     const fetchGigs = async () => {
         setLoading(true);
         try {
-            const res = await axios.get(`http://localhost:5000/api/gigs?search=${search}`);
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/gigs?search=${search}`);
             setGigs(res.data);
         } catch (err) {
             console.error(err);
