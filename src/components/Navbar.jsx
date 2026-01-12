@@ -34,6 +34,21 @@ const Navbar = () => {
                     {userInfo ? (
                         <>
                             <Link
+                                to="/"
+                                className="hidden md:flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition"
+                            >
+                                <Briefcase className="w-5 h-5" />
+                                Browse Gigs
+                            </Link>
+
+                            <Link
+                                to="/my-projects"
+                                className="hidden md:flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition"
+                            >
+                                My Projects
+                            </Link>
+
+                            <Link
                                 to="/create-gig"
                                 className="hidden md:flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition"
                             >

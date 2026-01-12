@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import MyProjects from './pages/MyProjects';
 import CreateGig from './pages/CreateGig';
 import GigDetails from './pages/GigDetails';
 import PrivateRoute from './components/PrivateRoute';
@@ -46,6 +47,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/" element={<Dashboard />} />
               <Route path="/create-gig" element={<PrivateRoute><CreateGig /></PrivateRoute>} />
+              <Route path="/my-projects" element={<PrivateRoute><MyProjects /></PrivateRoute>} />
               <Route path="/gigs/:id" element={<PrivateRoute><GigDetails /></PrivateRoute>} />
             </Routes>
           </main>
