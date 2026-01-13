@@ -83,6 +83,11 @@ const GigDetails = () => {
 
     const handleBidSubmit = async (e) => {
         e.preventDefault();
+
+        if (Number(price) > gig.budget) {
+            return toast.error('Bid cannot exceed project budget');
+        }
+
         try {
             const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/bids`,
                 { gigId: id, message, price },
