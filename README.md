@@ -24,6 +24,14 @@ Premium React application built with Vite and Tailwind CSS.
 *   No external libraries used for the hamburger menu or overlay.
 *   Smooth `framer-motion` style transitions (using Tailwind classes).
 
+### 4. Real-Time Chat System 💬
+*   **Live Messaging**: Instant communication powered by Socket.io.
+*   **Smart Notifications**:
+    *   **Red Dot Badge**: Real-time unread indicators on the Navbar.
+    *   **Toast Popups**: Non-intrusive alerts for new messages while browsing.
+*   **Read Receipts**: WhatsApp-style **Double Ticks** (Gray = Delivered, Indigo = Read).
+*   **Project Context**: Auto-detects and displays the **Related Gig** in the chat header for context-aware conversations.
+
 ## 📁 Key Structure
 *   `src/context`: Auth & Notification state logic.
 *   `src/pages`: Home (Bento Grid), Dashboard (Rich Stats), GigDetails.
