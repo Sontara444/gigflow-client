@@ -8,7 +8,6 @@ import store from './store';
 import { SocketProvider } from './context/SocketContext';
 import axios from 'axios';
 
-// Set up Axios interceptor for Authorization header
 axios.interceptors.request.use(
   (config) => {
     const userInfo = localStorage.getItem('userInfo');

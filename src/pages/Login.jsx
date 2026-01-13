@@ -40,7 +40,6 @@ const Login = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
             <div className="flex w-full max-w-5xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl overflow-hidden m-4 h-[600px] transition-colors duration-300">
-                {/* Left Side - Image/Gradient */}
                 <div className="hidden md:flex w-1/2 bg-gradient-to-br from-indigo-600 to-purple-700 text-white flex-col justify-center p-12 relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
                     <div className="relative z-10">
@@ -51,7 +50,6 @@ const Login = () => {
                     </div>
                 </div>
 
-                {/* Right Side - Form */}
                 <div className="w-full md:w-1/2 p-12 flex flex-col justify-center">
                     <div className="text-center mb-8">
                         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Sign In</h1>

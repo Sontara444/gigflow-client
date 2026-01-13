@@ -1,16 +1,29 @@
-# React + Vite
+# GigFlow Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Premium React application built with Vite and Tailwind CSS.
 
-Currently, two official plugins are available:
+## 🚀 Setup
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1.  **Install**: `npm install`
+2.  **Configure**: Create `.env` using keys from `.env.example`.
+3.  **Run**: `npm run dev`
 
-## React Compiler
+## ✨ Premium UI/UX Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 1. "Cosmic Glass" Design System
+*   **Visuals**: Deep dark mode (`#0B0F19`) with animated **Gradient Orbs** and **Grid Patterns**.
+*   **Components**: Custom inputs, buttons, and cards using **Glassmorphism** (`bg-white/5 backdrop-blur-xl`).
 
-## Expanding the ESLint configuration
+### 2. Global Notification Context
+*   We avoid prop-drilling by managing Socket.io connections in `NotificationContext.jsx`.
+*   Automatically connects/disconnects sockets on login/logout.
+*   Merges **Offline (API)** and **Online (Socket)** notifications seamlessly.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 3. Responsive Mobile Menu
+*   A fully custom implementation in `Navbar.jsx`.
+*   No external libraries used for the hamburger menu or overlay.
+*   Smooth `framer-motion` style transitions (using Tailwind classes).
+
+## 📁 Key Structure
+*   `src/context`: Auth & Notification state logic.
+*   `src/pages`: Home (Bento Grid), Dashboard (Rich Stats), GigDetails.

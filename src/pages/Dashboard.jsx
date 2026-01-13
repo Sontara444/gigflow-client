@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import GigCard from '../components/GigCard';
-import { Search, Sparkles } from 'lucide-react';
+import { Search } from 'lucide-react';
 
 const Dashboard = () => {
     const [gigs, setGigs] = useState([]);
@@ -29,74 +29,74 @@ const Dashboard = () => {
     }, [search]);
 
     return (
-        <div className="pb-20">
-            {/* Hero Section */}
-            <div className="relative bg-indigo-900 dark:bg-slate-800 text-white rounded-3xl p-10 mb-12 overflow-hidden shadow-2xl transition-colors duration-300">
-                <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-purple-500 rounded-full blur-3xl opacity-30"></div>
-                <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-blue-500 rounded-full blur-3xl opacity-30"></div>
+        <div className="min-h-screen flex flex-col bg-white dark:bg-[#0B0F19] transition-colors duration-500 overflow-x-hidden selection:bg-indigo-500/30">
+            <div className="fixed inset-0 z-0 pointer-events-none">
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+                <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-indigo-500 opacity-20 blur-[100px] dark:opacity-20"></div>
+                <div className="absolute right-0 bottom-0 -z-10 h-[400px] w-[400px] rounded-full bg-purple-500 opacity-20 blur-[120px] dark:opacity-10"></div>
+            </div>
 
-                <div className="relative z-10 text-center max-w-3xl mx-auto">
-                    <div className="inline-flex items-center gap-2 bg-indigo-800/50 dark:bg-slate-700/50 rounded-full px-4 py-1.5 mb-6 border border-indigo-700 dark:border-slate-600">
-                        <Sparkles className="w-4 h-4 text-yellow-400" />
-                        <span className="text-sm font-medium text-indigo-200 dark:text-indigo-100">The #1 Freelance Marketplace</span>
-                    </div>
-                    <h1 className="text-5xl font-bold mb-6 tracking-tight leading-tight">
-                        Find the perfect <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Freelance Gig</span>
+            <div className="relative z-10 container mx-auto px-6 py-12 flex-grow">
+                <div className="max-w-4xl mx-auto mb-16 text-center">
+                    <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-6 tracking-tight">
+                        Find Your Next <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600">Opportunity</span>
                     </h1>
-                    <p className="text-xl text-indigo-200 dark:text-slate-300 mb-10 leading-relaxed">
-                        Connect with top clients or find skilled experts for your next big project. Secure, fast, and simple.
-                    </p>
 
-                    <div className="max-w-2xl mx-auto">
-                        <div className="relative flex items-center w-full h-14 rounded-full bg-white/95 dark:bg-slate-900/80 backdrop-blur-md border border-gray-200 dark:border-slate-700 shadow-lg focus-within:shadow-xl focus-within:border-indigo-500 dark:focus-within:border-indigo-400 transition-all duration-300 ease-in-out">
-                            <div className="pl-5 pointer-events-none">
-                                <Search className="w-5 h-5 text-gray-400 dark:text-gray-500" />
+                    <div className="relative group max-w-2xl mx-auto">
+                        <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+                        <div className="relative flex items-center w-full h-16 rounded-2xl bg-white dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-xl transition-all duration-300 group-hover:translate-y-[-2px]">
+                            <div className="pl-6 pointer-events-none">
+                                <Search className="w-6 h-6 text-indigo-500 dark:text-indigo-400" />
                             </div>
 
                             <input
                                 type="text"
-                                className="w-full h-full py-4 pl-3 pr-4 text-gray-900 dark:text-gray-100 bg-transparent outline-none placeholder-gray-400 dark:placeholder-gray-500 font-medium"
-                                placeholder="Search for services..."
+                                className="w-full h-full py-4 pl-4 pr-6 text-lg text-slate-900 dark:text-gray-100 bg-transparent outline-none placeholder-slate-400 dark:placeholder-slate-500 font-medium"
+                                placeholder="Search for gigs (e.g., 'React', 'Design', 'Writer')..."
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                             />
-
-                            <div className="pr-1.5 pt-0.5 pb-0.5 hidden sm:block">
-                                <button className="h-11 px-8 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm transition-all duration-200 shadow-md hover:shadow-indigo-500/20 active:scale-95">
-                                    Search
-                                </button>
-                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div className="flex justify-between items-center mb-8 px-2">
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 flex items-center gap-2">
-                    Most Recent Gigs
-                    <span className="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-xs px-2 py-1 rounded-full">{gigs.length} available</span>
-                </h2>
-            </div>
-
-            {loading ? (
-                <div className="flex justify-center py-20">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 dark:border-indigo-400"></div>
-                </div>
-            ) : gigs.length === 0 ? (
-                <div className="text-center py-20 bg-white dark:bg-slate-800 rounded-3xl border border-dashed border-gray-300 dark:border-slate-700 transition-colors duration-300">
-                    <div className="mx-auto w-24 h-24 bg-gray-100 dark:bg-slate-700 rounded-full flex items-center justify-center mb-4">
-                        <Search className="w-10 h-10 text-gray-400 dark:text-gray-500" />
+                <div className="max-w-5xl mx-auto">
+                    <div className="flex justify-between items-end mb-8 px-2 border-b border-indigo-100 dark:border-white/5 pb-4">
+                        <h2 className="text-2xl font-bold text-slate-800 dark:text-gray-100 flex items-center gap-3">
+                            Latest Gigs
+                            {!loading && (
+                                <span className="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-100 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-500/30">
+                                    {gigs.length}
+                                </span>
+                            )}
+                        </h2>
                     </div>
-                    <h3 className="text-xl font-bold text-gray-700 dark:text-gray-300">No gigs found</h3>
-                    <p className="text-gray-500 dark:text-gray-400">Try adjusting your search terms</p>
+
+                    {loading ? (
+                        <div className="flex justify-center py-20">
+                            <div className="animate-spin rounded-full h-12 w-12 border-4 border-indigo-500/30 border-t-indigo-500"></div>
+                        </div>
+                    ) : gigs.length === 0 ? (
+                        <div className="text-center py-24 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md rounded-3xl border border-dashed border-slate-300 dark:border-slate-700 transition-all duration-300">
+                            <div className="mx-auto w-20 h-20 bg-indigo-50 dark:bg-slate-800 rounded-full flex items-center justify-center mb-6 shadow-inner">
+                                <Search className="w-10 h-10 text-indigo-400 dark:text-slate-500" />
+                            </div>
+                            <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">No gigs found</h3>
+                            <p className="text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
+                                We couldn't find any gigs matching "{search}". Try searching for something else.
+                            </p>
+                        </div>
+                    ) : (
+                        <div className="flex flex-col gap-5">
+                            {gigs.map((gig) => (
+                                <div key={gig._id} className="animate-fade-in-up">
+                                    <GigCard gig={gig} />
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
-            ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {gigs.map((gig) => (
-                        <GigCard key={gig._id} gig={gig} />
-                    ))}
-                </div>
-            )}
+            </div>
         </div>
     );
 };
