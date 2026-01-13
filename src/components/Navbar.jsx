@@ -5,6 +5,7 @@ import { logout } from '../slices/authSlice';
 import { LogOut, PlusCircle, User, Briefcase, Moon, Sun, Menu, X, MessageSquare } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import NotificationDropdown from './NotificationDropdown';
+import { useNotifications } from '../context/NotificationContext';
 
 const Navbar = () => {
     const { userInfo } = useSelector((state) => state.auth);
@@ -12,6 +13,7 @@ const Navbar = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { theme, toggleTheme } = useTheme();
+    const { unreadMessageCount } = useNotifications() || {};
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
@@ -73,10 +75,13 @@ const Navbar = () => {
 
                                 <Link
                                     to="/chats"
-                                    className={`p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300 transition ${isActive('/chats')}`}
+                                    className={`p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300 transition relative ${isActive('/chats')}`}
                                     title="Messages"
                                 >
                                     <MessageSquare className="w-5 h-5" />
+                                    {unreadMessageCount > 0 && !location.pathname.startsWith('/chats') && (
+                                        <span className="absolute top-1 right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-white dark:border-[#0B0F19]"></span>
+                                    )}
                                 </Link>
 
                                 <NotificationDropdown />

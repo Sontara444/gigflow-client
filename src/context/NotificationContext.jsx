@@ -12,7 +12,8 @@ export const useNotifications = () => {
 
 export const NotificationProvider = ({ children }) => {
     const [notifications, setNotifications] = useState([]);
-    const [unreadCount, setUnreadCount] = useState(0);
+    const [unreadCount, setUnreadCount] = useState(0); // For system notifications
+    const [unreadMessageCount, setUnreadMessageCount] = useState(0); // For chat messages
     const { userInfo } = useSelector((state) => state.auth);
     const socket = useSocket();
 
@@ -25,6 +26,19 @@ export const NotificationProvider = ({ children }) => {
             setUnreadCount(data.filter((n) => !n.isRead).length);
         } catch (error) {
             console.error('Failed to fetch notifications', error);
+        }
+    };
+
+    const fetchUnreadMessageCount = async () => {
+        try {
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/messages`, {
+                withCredentials: true,
+            });
+            // Count conversations with unread messages
+            const count = data.filter(chat => chat.unread).length;
+            setUnreadMessageCount(count);
+        } catch (error) {
+            console.error('Failed to fetch unread messages', error);
         }
     };
 
@@ -57,9 +71,11 @@ export const NotificationProvider = ({ children }) => {
     useEffect(() => {
         if (userInfo) {
             fetchNotifications();
+            fetchUnreadMessageCount();
         } else {
             setNotifications([]);
             setUnreadCount(0);
+            setUnreadMessageCount(0);
         }
     }, [userInfo]);
 
@@ -89,6 +105,9 @@ export const NotificationProvider = ({ children }) => {
 
             const handleReceiveMessage = (message) => {
                 console.log('NotificationContext: Received message', message);
+
+                // Refresh unread count whenever a new message arrives
+                fetchUnreadMessageCount();
 
                 // Don't show notification if we are on the chat page with this user
                 const currentPath = window.location.pathname;
@@ -134,7 +153,7 @@ export const NotificationProvider = ({ children }) => {
     }, [socket, userInfo]);
 
     return (
-        <NotificationContext.Provider value={{ notifications, unreadCount, markAsRead, markAllAsRead }}>
+        <NotificationContext.Provider value={{ notifications, unreadCount, unreadMessageCount, fetchUnreadMessageCount, markAsRead, markAllAsRead }}>
             {children}
         </NotificationContext.Provider>
     );
