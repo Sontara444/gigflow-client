@@ -8,6 +8,8 @@ import store from './store';
 import { SocketProvider } from './context/SocketContext';
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 axios.interceptors.request.use(
   (config) => {
     const userInfo = localStorage.getItem('userInfo');
@@ -20,6 +22,17 @@ axios.interceptors.request.use(
     return config;
   },
   (error) => {
+    return Promise.reject(error);
+  }
+);
+
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem('userInfo');
+      window.location.href = '/login';
+    }
     return Promise.reject(error);
   }
 );
