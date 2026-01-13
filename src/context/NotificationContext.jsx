@@ -65,6 +65,7 @@ export const NotificationProvider = ({ children }) => {
 
     useEffect(() => {
         if (socket && userInfo) {
+            console.log('NotificationContext: Socket connected, setting up listeners');
             const handleHireNotification = (data) => {
 
 
@@ -86,10 +87,48 @@ export const NotificationProvider = ({ children }) => {
                 });
             };
 
+            const handleReceiveMessage = (message) => {
+                console.log('NotificationContext: Received message', message);
+
+                // Don't show notification if we are on the chat page with this user
+                const currentPath = window.location.pathname;
+                const senderId = message.sender._id || message.sender; // Handle both populated and unpopulated just in case
+
+                // Check if the URL contains the sender's ID (handling both /chats/ and /chat/ for safety)
+                const isChattingWithSender = currentPath.includes(`/chats/${senderId}`) || currentPath.includes(`/chat/${senderId}`);
+
+                if (!isChattingWithSender) {
+                    toast((t) => (
+                        <div
+                            onClick={() => {
+                                toast.dismiss(t.id);
+                                window.location.href = `/chats/${senderId}`;
+                            }}
+                            className="cursor-pointer"
+                        >
+                            <p className="font-bold text-sm">New message from {message.sender.name || 'User'}</p>
+                            <p className="text-xs truncate max-w-[200px]">{message.content}</p>
+                        </div>
+                    ), {
+                        duration: 5000,
+                        position: 'top-right',
+                        style: {
+                            background: '#fff',
+                            color: '#333',
+                            borderLeft: '4px solid #6366f1',
+                            cursor: 'pointer',
+                        },
+                        icon: '💬',
+                    });
+                }
+            };
+
             socket.on('hire_notification', handleHireNotification);
+            socket.on('receive_message', handleReceiveMessage);
 
             return () => {
                 socket.off('hire_notification', handleHireNotification);
+                socket.off('receive_message', handleReceiveMessage);
             };
         }
     }, [socket, userInfo]);

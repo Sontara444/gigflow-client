@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import BidItem from '../components/BidItem';
-import { ArrowLeft, Clock, User, CheckCircle, Shield, Calendar } from 'lucide-react';
+import { ArrowLeft, Clock, User, CheckCircle, Shield, Calendar, MessageSquare } from 'lucide-react';
 import { useSocket } from '../context/SocketContext';
 
 const GigDetails = () => {
@@ -228,12 +228,20 @@ const GigDetails = () => {
                                         <div className="inline-block px-4 py-1.5 rounded-full bg-slate-100 dark:bg-slate-700/50 text-slate-600 dark:text-slate-300 text-sm font-medium mb-4">
                                             Status: <span className="uppercase">{myBid.status}</span>
                                         </div>
-                                        <p className="text-slate-500 dark:text-slate-400 text-sm">
+                                        <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">
                                             {myBid.status === 'pending'
                                                 ? "We've sent your proposal to the client. You'll be notified if they're interested."
                                                 : "Check your dashboard for more details."}
                                         </p>
-                                        <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-700 grid grid-cols-2 gap-4 text-left">
+
+                                        <button
+                                            onClick={() => navigate(`/chat/${gig.ownerId._id}`)}
+                                            className="w-full py-2.5 rounded-lg bg-indigo-50 text-indigo-600 hover:bg-indigo-100 dark:bg-indigo-900/20 dark:text-indigo-400 dark:hover:bg-indigo-900/30 transition font-medium text-sm flex items-center justify-center gap-2 mb-4"
+                                        >
+                                            <MessageSquare className="w-4 h-4" /> Message Owner
+                                        </button>
+
+                                        <div className="pt-6 border-t border-slate-100 dark:border-slate-700 grid grid-cols-2 gap-4 text-left">
                                             <div>
                                                 <p className="text-xs text-slate-500 uppercase font-bold">Your Price</p>
                                                 <p className="font-semibold dark:text-white">${myBid.price}</p>

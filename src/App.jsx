@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster, toast } from 'react-hot-toast';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
@@ -13,6 +13,10 @@ import Home from './pages/Home';
 import { ThemeProvider } from './context/ThemeContext';
 import { useSocket } from './context/SocketContext';
 import { NotificationProvider } from './context/NotificationContext';
+import ChatLayout from './pages/ChatLayout';
+import ChatWindow from './components/ChatWindow';
+import ChatPlaceholder from './components/ChatPlaceholder';
+import RedirectToChat from './components/RedirectToChat';
 
 function App() {
   const socket = useSocket();
@@ -34,6 +38,12 @@ function App() {
                 <Route path="/create-gig" element={<PrivateRoute><CreateGig /></PrivateRoute>} />
                 <Route path="/my-projects" element={<PrivateRoute><MyProjects /></PrivateRoute>} />
                 <Route path="/gigs/:id" element={<PrivateRoute><GigDetails /></PrivateRoute>} />
+                <Route path="/chats" element={<PrivateRoute><ChatLayout /></PrivateRoute>}>
+                  <Route index element={<ChatPlaceholder />} />
+                  <Route path=":userId" element={<ChatWindow />} />
+                </Route>
+                {/* Keep old route for backward compatibility if needed, or redirect */}
+                <Route path="/chat/:userId" element={<RedirectToChat />} />
               </Routes>
             </main>
           </div>

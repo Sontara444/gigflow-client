@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../slices/authSlice';
-import { LogOut, PlusCircle, User, Briefcase, Moon, Sun, Menu, X } from 'lucide-react';
+import { LogOut, PlusCircle, User, Briefcase, Moon, Sun, Menu, X, MessageSquare } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import NotificationDropdown from './NotificationDropdown';
 
@@ -71,6 +71,14 @@ const Navbar = () => {
                                     Post a Gig
                                 </Link>
 
+                                <Link
+                                    to="/chats"
+                                    className={`p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300 transition ${isActive('/chats')}`}
+                                    title="Messages"
+                                >
+                                    <MessageSquare className="w-5 h-5" />
+                                </Link>
+
                                 <NotificationDropdown />
 
                                 <div className="flex items-center gap-3 pl-6 border-l border-gray-200 dark:border-white/10">
@@ -137,6 +145,9 @@ const Navbar = () => {
                                     </Link>
                                     <Link to="/create-gig" className={`flex items-center gap-3 p-3 rounded-xl font-medium ${isActive('/create-gig')}`}>
                                         <PlusCircle className="w-5 h-5" /> Post a Gig
+                                    </Link>
+                                    <Link to="/chats" className={`flex items-center gap-3 p-3 rounded-xl font-medium ${isActive('/chats')}`}>
+                                        <MessageSquare className="w-5 h-5" /> Messages
                                     </Link>
 
                                     <div className="h-px bg-gray-100 dark:bg-white/5 my-2"></div>
